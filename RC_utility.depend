@@ -1,0 +1,222 @@
+# depslib dependency file v1.0
+1409399885 source:d:\rc_engine\rc_utility_final\engine.rc
+
+1409440882 source:d:\rc_engine\rc_utility_final\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"rapidxml.hpp"
+	"rapidxml_utils.hpp"
+	<FL/Fl.H>
+	<FL/Fl_Double_Window.H>
+	<FL/Fl_Box.H>
+	<FL/Fl_Text_Display.H>
+	<FL/Fl_Help_View.H>
+	<FL/Fl_Button.H>
+	<FL/Fl_Text_Buffer.H>
+	<FL/Fl_Input.H>
+	<FL/fl_ask.H>
+	<FL/x.H>
+	<windows.h>
+	"stb_image.h"
+	"stb_image_write.h"
+
+1242197178 d:\rc_engine\rc_utility_final\rapidxml.hpp
+	<cstdlib>
+	<cassert>
+	<new>
+	<exception>
+
+1242446560 d:\rc_engine\rc_utility_final\rapidxml_utils.hpp
+	"rapidxml.hpp"
+	<vector>
+	<string>
+	<fstream>
+	<stdexcept>
+
+1304653320 d:\dev\fltk\include\fl\fl.h
+	<FL/Fl_Cairo.H>
+	"fl_utf8.h"
+	"Enumerations.H"
+
+1304653322 d:\dev\fltk\include\fl\fl_cairo.h
+	<FL/Fl_Export.H>
+	<cairo-xlib.h>
+	<cairo-win32.h>
+	<cairo-quartz.h>
+
+1304653324 d:\dev\fltk\include\fl\fl_export.h
+
+1304653337 d:\dev\fltk\include\fl\fl_utf8.h
+	"Fl_Export.H"
+	"fl_types.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<locale.h>
+	<ctype.h>
+	<wchar.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<sys/stat.h>
+	"Xutf8.h"
+	<X11/Xlocale.h>
+	<X11/Xlib.h>
+	<locale.h>
+
+1304653337 d:\dev\fltk\include\fl\fl_types.h
+
+1304653337 d:\dev\fltk\include\fl\xutf8.h
+	<X11/X.h>
+	<X11/Xlib.h>
+	<X11/Xlocale.h>
+	<X11/Xutil.h>
+
+1304653320 d:\dev\fltk\include\fl\enumerations.h
+	"Fl_Export.H"
+	"fl_types.h"
+
+1304653324 d:\dev\fltk\include\fl\fl_double_window.h
+	"Fl_Window.H"
+
+1304653336 d:\dev\fltk\include\fl\fl_window.h
+	"Fl_Group.H"
+
+1304653326 d:\dev\fltk\include\fl\fl_group.h
+	"Fl_Widget.H"
+
+1304653336 d:\dev\fltk\include\fl\fl_widget.h
+	"Enumerations.H"
+	<stdint.h>
+	<stddef.h>
+
+1304653321 d:\dev\fltk\include\fl\fl_box.h
+	"Fl_Widget.H"
+
+1408816753 d:\dev\fltk\include\fl\fl_text_display.h
+	"fl_draw.H"
+	"Fl_Group.H"
+	"Fl_Widget.H"
+	"Fl_Scrollbar.H"
+	"Fl_Text_Buffer.H"
+
+1304653337 d:\dev\fltk\include\fl\fl_draw.h
+	<FL/x.H>
+	<FL/Enumerations.H>
+	<FL/Fl_Window.H>
+	<FL/Fl_Device.H>
+
+1304653338 d:\dev\fltk\include\fl\x.h
+	"Enumerations.H"
+	"win32.H"
+	"mac.H"
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/Xatom.h>
+	"Fl_Window.H"
+	"Xutf8.h"
+
+1304653338 d:\dev\fltk\include\fl\win32.h
+	<windows.h>
+	<FL/Fl_Window.H>
+
+1304653338 d:\dev\fltk\include\fl\mac.h
+	<FL/Fl_Widget.H>
+	<AvailabilityMacros.h>
+	<ApplicationServices/ApplicationServices.h>
+	"Fl_Window.H"
+
+1304653324 d:\dev\fltk\include\fl\fl_device.h
+	<FL/x.H>
+	<FL/Fl_Plugin.H>
+	<FL/Fl_Image.H>
+	<FL/Fl_Bitmap.H>
+	<FL/Fl_Pixmap.H>
+	<FL/Fl_RGB_Image.H>
+
+1304653331 d:\dev\fltk\include\fl\fl_plugin.h
+	"Fl_Preferences.H"
+
+1304653331 d:\dev\fltk\include\fl\fl_preferences.h
+	<stdio.h>
+	"Fl_Export.H"
+
+1304653327 d:\dev\fltk\include\fl\fl_image.h
+	"Enumerations.H"
+
+1304653321 d:\dev\fltk\include\fl\fl_bitmap.h
+	"Fl_Image.H"
+
+1304653331 d:\dev\fltk\include\fl\fl_pixmap.h
+	"Fl_Image.H"
+
+1304653332 d:\dev\fltk\include\fl\fl_rgb_image.h
+	"Fl_Image.H"
+
+1304653333 d:\dev\fltk\include\fl\fl_scrollbar.h
+	"Fl_Slider.H"
+
+1304653334 d:\dev\fltk\include\fl\fl_slider.h
+	"Fl_Valuator.H"
+
+1304653336 d:\dev\fltk\include\fl\fl_valuator.h
+	"Fl_Widget.H"
+
+1304653335 d:\dev\fltk\include\fl\fl_text_buffer.h
+	<assert.h>
+	"Fl_Export.H"
+
+1304653326 d:\dev\fltk\include\fl\fl_help_view.h
+	<stdio.h>
+	"Fl.H"
+	"Fl_Group.H"
+	"Fl_Scrollbar.H"
+	"fl_draw.H"
+	"Fl_Shared_Image.H"
+	"filename.H"
+
+1304653334 d:\dev\fltk\include\fl\fl_shared_image.h
+	"Fl_Image.H"
+
+1304653337 d:\dev\fltk\include\fl\filename.h
+	"/usr/include/dirent.h"
+	"Fl_Export.H"
+	<FL/filename.H>
+	<sys/types.h>
+	<direct.h>
+	<sys/types.h>
+	<dirent.h>
+
+1304653322 d:\dev\fltk\include\fl\fl_button.h
+	"Fl_Widget.H"
+
+1304653327 d:\dev\fltk\include\fl\fl_input.h
+	"Fl_Input_.H"
+
+1304653327 d:\dev\fltk\include\fl\fl_input_.h
+	"Fl_Widget.H"
+
+1304653337 d:\dev\fltk\include\fl\fl_ask.h
+	"Enumerations.H"
+
+1409078464 d:\rc_engine\rc_utility_final\stb_image.h
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
+
+1409078464 d:\rc_engine\rc_utility_final\stb_image_write.h
+	<stdarg.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+

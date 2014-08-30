@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="RC_Practice_Utility" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/RC_Practice_Utility" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="liboleaut32" />
+					<Add library="libshell32.a" />
+					<Add library="libole32.a" />
+					<Add library="libvfw32.a" />
+					<Add library="libwinmm.a" />
+					<Add library="libwininet.a" />
+					<Add library="libws2_32.a" />
+					<Add library="libdsound.a" />
+					<Add library="libwsock32.a" />
+					<Add library="libwldap32.a" />
+					<Add library="libkernel32" />
+					<Add library="libopengl32.a" />
+					<Add library="libglu32.a" />
+					<Add library="libuuid.a" />
+					<Add library="librpcrt4.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libcomdlg32.a" />
+					<Add library="libversion.a" />
+					<Add library="libshlwapi.a" />
+					<Add library="libfltk_images.a" />
+					<Add library="libfltk_jpeg.a" />
+					<Add library="libfltk_png.a" />
+					<Add library="libfltk_z.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/RC_Practice_Utility" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-s" />
+				</Compiler>
+				<Linker>
+					<Add library="liboleaut32" />
+					<Add library="libshell32.a" />
+					<Add library="libole32.a" />
+					<Add library="libvfw32.a" />
+					<Add library="libwinmm.a" />
+					<Add library="libwininet.a" />
+					<Add library="libws2_32.a" />
+					<Add library="libdsound.a" />
+					<Add library="libwsock32.a" />
+					<Add library="libwldap32.a" />
+					<Add library="libkernel32" />
+					<Add library="libopengl32.a" />
+					<Add library="libglu32.a" />
+					<Add library="libuuid.a" />
+					<Add library="librpcrt4.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libcomdlg32.a" />
+					<Add library="libversion.a" />
+					<Add library="libshlwapi.a" />
+					<Add library="libfltk_images.a" />
+					<Add library="libfltk_jpeg.a" />
+					<Add library="libfltk_png.a" />
+					<Add library="libfltk_z.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-DWIN32" />
+			<Add option="-mms-bitfields" />
+			<Add directory="D:/dev/fltk/include" />
+		</Compiler>
+		<Linker>
+			<Add library="fltk" />
+			<Add library="ole32" />
+			<Add library="uuid" />
+			<Add library="comctl32" />
+			<Add library="wsock32" />
+			<Add library="m" />
+			<Add library="gdi32" />
+			<Add library="user32" />
+			<Add library="kernel32" />
+			<Add directory="D:/dev/fltk/lib" />
+		</Linker>
+		<Unit filename="engine.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rapidxml.hpp" />
+		<Unit filename="rapidxml_utils.hpp" />
+		<Unit filename="stb_image.h" />
+		<Unit filename="stb_image_write.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
