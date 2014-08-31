@@ -5,7 +5,7 @@ This is a desktop application for practicing reading comprehensions. Unlike its 
 
 <pre>
 <span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>passages</span><span style='color:#7f0055; '>></span>	
-	<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>passage_data</span> pid=<span style='color:#0000ff; '>"</span><span style='color:#0000ff; '>[passage_index]</span><span style='color:#0000ff; '>"</span><span style='color:#7f0055; '>></span>
+	<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>passage_data</span> pid=<span style='color:#0000ff; '>"</span><font color='#0000ff; '>[passage_index]</fonf><span style='color:#0000ff; '>"</span><span style='color:#7f0055; '>></span>
 		<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>data</span> txt=<span style='color:#0000ff; '>"</span><span style='color:#0000ff; '>[passage_data]</span><span style='color:#0000ff; '>"</span><span style='color:#7f0055; '>></span><span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; '>data</span><span style='color:#7f0055; '>></span>
 		<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>questions</span><span style='color:#7f0055; '>></span>
 			<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>question_data</span> qid=<span style='color:#0000ff; '>"</span><span style='color:#0000ff; '>[question_index]</span><span style='color:#0000ff; '>"</span><span style='color:#7f0055; '>></span>
