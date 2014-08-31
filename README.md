@@ -3,7 +3,7 @@ RC_Practice_Desktop_App
 
 This is a desktop application for practicing reading comprehensions. Unlike its <a href='https://github.com/lagnajeet/RC_Practice_Utility'>predecessor</a> which was just an HTML file with the logic implemented in JavaScript this is a true desktop application. It accepts data files as XML documents. The data format of the XML document is as shown below.
 
-<pre style='color:#000000;background:#ffffff;'><html><body style='color:#000000; background:#ffffff; '><pre>
+<pre>
 <span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>passages</span><span style='color:#7f0055; '>></span>	
 	<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>passage_data</span> pid=<span style='color:#0000ff; '>"</span><span style='color:#0000ff; '>[passage_index]</span><span style='color:#0000ff; '>"</span><span style='color:#7f0055; '>></span>
 		<span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; '>data</span> txt=<span style='color:#0000ff; '>"</span><span style='color:#0000ff; '>[passage_data]</span><span style='color:#0000ff; '>"</span><span style='color:#7f0055; '>></span><span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; '>data</span><span style='color:#7f0055; '>></span>
