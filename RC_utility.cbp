@@ -79,7 +79,7 @@
 		<Compiler>
 			<Add option="-DWIN32" />
 			<Add option="-mms-bitfields" />
-			<Add directory="D:/dev/fltk/include" />
+			<Add directory="./fltk_win32/include" />
 		</Compiler>
 		<Linker>
 			<Add library="fltk" />
@@ -91,7 +91,7 @@
 			<Add library="gdi32" />
 			<Add library="user32" />
 			<Add library="kernel32" />
-			<Add directory="D:/dev/fltk/lib" />
+			<Add directory="./fltk_win32/lib" />
 		</Linker>
 		<Unit filename="engine.rc">
 			<Option compilerVar="WINDRES" />

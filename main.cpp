@@ -39,6 +39,7 @@ int cur_qid;
 int cur_ans;
 int usr_ans;
 int rs;
+int enable_timer;
 rapidxml::xml_node<> *questions,*node;
 Fl_Button *But_A,*But_B,*But_C,*But_D,*But_E,*nxt_question;
 void *obj_progress;
@@ -103,28 +104,31 @@ char* get_attr_value(rapidxml::xml_node<> *node, char* attr_name)
 
 static void Timer_CB(void *data)                // timer callback
 {
-    Fl_Text_Buffer* buf;
-    buf=new Fl_Text_Buffer();
-
-    char text[1024];
-    if(count_min<=0)
-        sprintf(text,"Time elapsed : %d Secs",count_sec);
-    else
+    if(enable_timer==1)
     {
-        if(count_min==1)
-            sprintf(text,"Time elapsed : %d min , %d Secs",count_min,count_sec);
+        Fl_Text_Buffer* buf;
+        buf=new Fl_Text_Buffer();
+
+        char text[1024];
+        if(count_min<=0)
+            sprintf(text,"Time elapsed : %d Secs",count_sec);
         else
-            sprintf(text,"Time elapsed : %d mins , %d Secs",count_min,count_sec);
-    }
+        {
+            if(count_min==1)
+                sprintf(text,"Time elapsed : %d min , %d Secs",count_min,count_sec);
+            else
+                sprintf(text,"Time elapsed : %d mins , %d Secs",count_min,count_sec);
+        }
 
-    buf->text(text);
-    count_sec=count_sec+1;
-    if(count_sec>=60)
-    {
-        count_sec=0;
-        count_min=count_min+1;
+        buf->text(text);
+        count_sec=count_sec+1;
+        if(count_sec>=60)
+        {
+            count_sec=0;
+            count_min=count_min+1;
+        }
+        clock1->buffer(buf);
     }
-    clock1->buffer(buf);
     Fl::repeat_timeout(1, Timer_CB, data);
     //}
 }
@@ -253,6 +257,7 @@ void check_answer(int usr_ans)
     disable_buttons(1);
     nxt_question->activate();
     nxt_question->take_focus();
+    enable_timer=0;
 }
 void populate_question(int qid_no)
 {
@@ -320,6 +325,7 @@ void populate_question(int qid_no)
     q->value(buf->text());
     disable_buttons(0);
     nxt_question->deactivate();
+    enable_timer=1;
 }
 void gen_random(char *s, const int len)
 {
@@ -401,6 +407,7 @@ void populate_psg(int pid_no)
     populate_question(0);
     count_sec=0;
     count_min=0;
+    enable_timer=1;
     unlink(cur_img_file_name);
 }
 int total_psg()
@@ -567,6 +574,7 @@ int main (int argc, char ** argv)
     cur_ans=0;
     rs=0;
     usr_ans=-1;
+    enable_timer=0;
     cur_progress p(5, 550,423, 30,0);
     obj_progress = (cur_progress*)window->child(15);
 
@@ -584,7 +592,7 @@ int main (int argc, char ** argv)
 
 
 
-
+    enable_timer=1;
     Fl::add_timeout(1, Timer_CB);              // setup a timer
     window->end ();
     window->show (argc, argv);
