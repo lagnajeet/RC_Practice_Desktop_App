@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Menu_.H 7903 2010-11-28 21:06:39Z matt $"
+// "$Id: Fl_Menu_.H 9202 2011-12-08 17:10:11Z greg.ercolano $"
 //
 // Menu base class header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -87,6 +78,20 @@ public:
   /**
     Returns a pointer to the array of Fl_Menu_Items.  This will either be
     the value passed to menu(value) or the private copy.
+    \sa size() -- returns the size of the Fl_Menu_Item array.
+
+    \b Example: How to walk the array:
+    \code
+    for ( int t=0; t<menubar->size(); t++ ) {                // walk array of items
+        const Fl_Menu_Item &item = menubar->menu()[t];       // get each item
+        fprintf(stderr, "item #%d -- label=%s, value=%s type=%s\n",
+            t,
+            item.label() ? item.label() : "(Null)",          // menu terminators have NULL labels
+            (item.flags & FL_MENU_VALUE) ? "set" : "clear",  // value of toggle or radio items
+            (item.flags & FL_SUBMENU) ? "Submenu" : "Item"); // see if item is a submenu or actual item
+    }
+    \endcode
+
   */  
   const Fl_Menu_Item *menu() const {return menu_;}
   void menu(const Fl_Menu_Item *m);
@@ -164,5 +169,5 @@ public:
 #endif
 
 //
-// End of "$Id: Fl_Menu_.H 7903 2010-11-28 21:06:39Z matt $".
+// End of "$Id: Fl_Menu_.H 9202 2011-12-08 17:10:11Z greg.ercolano $".
 //

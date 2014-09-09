@@ -1,24 +1,15 @@
 //
-// "$Id: CubeView.h 7913 2010-11-29 18:18:27Z greg.ercolano $"
+// "$Id: CubeView.h 9325 2012-04-05 05:12:30Z fabien $"
 //
 // CubeView class definitions for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -55,10 +46,10 @@ public:
      * This function is called by the horizontal roller in CubeViewUI and the
      * initialize button in CubeViewUI.
      */
-    void v_angle(float angle){vAng=angle;};
+    void v_angle(double angle){vAng=angle;}
     
     // Return the rotation about the vertical (y ) axis.
-    float v_angle(){return vAng;};
+    double v_angle() const {return vAng;}
 
     /* Set the rotation about the horizontal (x ) axis.
      *
@@ -66,23 +57,23 @@ public:
      * initialize button in CubeViewUI.
      */
 
-    void h_angle(float angle){hAng=angle;};
+    void h_angle(double angle){hAng=angle;}
 
     // the rotation about the horizontal (x ) axis.
-    float h_angle(){return hAng;};
+    double h_angle() const {return hAng;}
 
     /* Sets the x shift of the cube view camera.
      *
      * This function is called by the slider in CubeViewUI and the
      * initialize button in CubeViewUI.
      */
-    void panx(float x){xshift=x;};
+    void panx(double x){xshift=x;}
     /* Sets the y shift of the cube view camera.
      *
      * This function is called by the slider in CubeViewUI and the
      * initialize button in CubeViewUI.
      */
-    void pany(float y){yshift=y;};
+    void pany(double y){yshift=y;}
 
 #if HAVE_GL
     /*The widget class draw() override.
@@ -107,8 +98,8 @@ private:
     void drawCube() { }
 #endif /* HAVE_GL */
     
-    float vAng,hAng;
-    float xshift,yshift;
+    double vAng,hAng;
+    double xshift,yshift;
 
 
     float boxv0[3];float boxv1[3];
@@ -120,5 +111,5 @@ private:
 #endif
 
 //
-// End of "$Id: CubeView.h 7913 2010-11-29 18:18:27Z greg.ercolano $".
+// End of "$Id: CubeView.h 9325 2012-04-05 05:12:30Z fabien $".
 //

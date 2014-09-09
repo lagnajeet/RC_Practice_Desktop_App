@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Widget.H 8623 2011-04-24 17:09:41Z AlbrechtS $"
+// "$Id: Fl_Widget.H 9388 2012-04-23 20:12:06Z matt $"
 //
 // Widget header file for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2010 by Bill Spitzak and others.
+// Copyright 1998-2012 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -179,6 +170,7 @@ protected:
         NO_OVERLAY      = 1<<15,  ///< window not using a hardware overlay plane (Fl_Menu_Window)
         GROUP_RELATIVE  = 1<<16,  ///< position this widget relative to the parent group, not to the window
         COPIED_TOOLTIP  = 1<<17,  ///< the widget tooltip is internally copied, its destruction is handled by the widget
+        FULLSCREEN      = 1<<18,  ///< a fullscreen window (Fl_Window)
         // (space for more flags)
         USERFLAG3       = 1<<29,  ///< reserved for 3rd party extensions
         USERFLAG2       = 1<<30,  ///< reserved for 3rd party extensions
@@ -852,6 +844,9 @@ public:
   static unsigned int label_shortcut(const char *t);
   /* Internal use only. */
   static int test_shortcut(const char*, const bool require_alt = false);
+  /* Internal use only. */
+  void _set_fullscreen() {flags_ |= FULLSCREEN;}
+  void _clear_fullscreen() {flags_ &= ~FULLSCREEN;}
 
   /** Checks if w is a child of this widget.
       \param[in] w potential child widget
@@ -860,13 +855,13 @@ public:
    */
   int contains(const Fl_Widget *w) const ;
 
-  /** Checks if this widget is a child of w.
-      Returns 1 if this widget is a child of \p w, or is
-      equal to \p w. Returns 0 if \p w is NULL.
-      \param[in] w the possible parent widget.
+  /** Checks if this widget is a child of \p wgt.
+      Returns 1 if this widget is a child of \p wgt, or is
+      equal to \p wgt. Returns 0 if \p wgt is NULL.
+      \param[in] wgt the possible parent widget.
       \see contains()
    */
-  int inside(const Fl_Widget* w) const {return w ? w->contains(this) : 0;}
+  int inside(const Fl_Widget* wgt) const {return wgt ? wgt->contains(this) : 0;}
 
   /** Schedules the drawing of the widget.
       Marks the widget as needing its draw() routine called.
@@ -1002,5 +997,5 @@ public:
 #endif
 
 //
-// End of "$Id: Fl_Widget.H 8623 2011-04-24 17:09:41Z AlbrechtS $".
+// End of "$Id: Fl_Widget.H 9388 2012-04-23 20:12:06Z matt $".
 //

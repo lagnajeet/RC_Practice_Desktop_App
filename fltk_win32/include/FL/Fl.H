@@ -1,24 +1,15 @@
 //
-// "$Id: Fl.H 8548 2011-03-30 12:07:52Z AlbrechtS $"
+// "$Id: Fl.H 9701 2012-10-18 12:56:31Z manolo $"
 //
 // Main header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -52,6 +43,16 @@ class Fl_Window;
 class Fl_Image;
 struct Fl_Label;
 
+// Keep avoiding having the socket deps at that level but mke sure it will work in both 32 & 64 bit builds
+#if defined(WIN32) && !defined(__CYGWIN__)
+# if defined(_WIN64)
+#  define FL_SOCKET unsigned __int64
+# else
+#  define FL_SOCKET int
+# endif
+#else
+# define FL_SOCKET int
+#endif
 
 /** \defgroup  callback_functions Callback function typedefs
  \brief Typedefs defined in <FL/Fl.H> for callback or handler functions passed as function parameters.
@@ -90,7 +91,7 @@ typedef void (*Fl_Idle_Handler)(void *data);
 typedef void (*Fl_Old_Idle_Handler)();
 
 /** Signature of add_fd functions passed as parameters */
-typedef void (*Fl_FD_Handler)(int fd, void *data);
+typedef void (*Fl_FD_Handler)(FL_SOCKET fd, void *data);
 
 /** Signature of add_handler functions passed as parameters */
 typedef int (*Fl_Event_Handler)(int event);
@@ -142,6 +143,7 @@ public: // should be private!
   static Fl_Window* modal_;
   static Fl_Window* grab_;
   static int compose_state;
+  static void call_screen_init(); // recompute screen number and dimensions
 #endif
   /**
     If true then flush() will do something.
@@ -645,7 +647,7 @@ public:
     \li All other keys on the keypad have a symbol: FL_Escape,
 	FL_BackSpace, FL_Tab, FL_Enter, FL_Print, FL_Scroll_Lock, FL_Pause,
 	FL_Insert, FL_Home, FL_Page_Up, FL_Delete, FL_End, FL_Page_Down,
-	FL_Left, FL_Up, FL_Right, FL_Down, FL_Shift_L, FL_Shift_R,
+	FL_Left, FL_Up, FL_Right, FL_Down, FL_Iso_Key, FL_Shift_L, FL_Shift_R,
 	FL_Control_L, FL_Control_R, FL_Caps_Lock, FL_Alt_L, FL_Alt_R,
 	FL_Meta_L, FL_Meta_R, FL_Menu, FL_Num_Lock, FL_KP_Enter.  Be
 	careful not to confuse these with the very similar, but all-caps,
@@ -664,13 +666,13 @@ public:
   static int get_key(int key); // platform dependent
   /** 
     Returns the text associated with the current event, including FL_PASTE or FL_DND_RELEASE events.
-    This can be used in response to FL_KEYUP, FL_KEYDOWN, FL_PASTE, FL_DND_RELEASE.
+    This can be used in response to FL_KEYUP, FL_KEYDOWN, FL_PASTE, and FL_DND_RELEASE.
 
     When responding to FL_KEYUP/FL_KEYDOWN, use this function instead of Fl::event_key()
     to get the text equivalent of keystrokes suitable for inserting into strings 
     and text widgets.
 
-    The returned string is guaranteed to be be NULL terminated.
+    The returned string is guaranteed to be NULL terminated.
     However, see Fl::event_length() for the actual length of the string,
     in case the string itself contains NULLs that are part of the text data.
 
@@ -766,13 +768,13 @@ public:
 	fl global screen functions declared in <FL/Fl.H>
      @{ */
   // screen size:
-  /** Returns the origin of the current screen, where 0 indicates the left side of the screen. */
+  /** Returns the leftmost x coordinate of the main screen work area. */
   static int x(); // platform dependent
-  /** Returns the origin of the current screen, where 0 indicates the top edge of the screen. */
+  /** Returns the topmost y coordinate of the main screen work area. */
   static int y(); // platform dependent
-  /** Returns the width of the screen in pixels. */
+  /** Returns the width in pixels of the main screen work area. */
   static int w(); // platform dependent
-  /** Returns the height of the screen in pixels. */
+  /** Returns the height in pixels of the main screen work area. */
   static int h(); // platform dependent
 
   // multi-head support:
@@ -783,12 +785,26 @@ public:
       \see void screen_xywh(int &x, int &y, int &w, int &h, int mx, int my) 
   */
   static void screen_xywh(int &X, int &Y, int &W, int &H) {
-    screen_xywh(X, Y, W, H, e_x_root, e_y_root);
+    int x, y;
+    Fl::get_mouse(x, y);
+    screen_xywh(X, Y, W, H, x, y);
   }
   static void screen_xywh(int &X, int &Y, int &W, int &H, int mx, int my);
   static void screen_xywh(int &X, int &Y, int &W, int &H, int n); 
   static void screen_xywh(int &X, int &Y, int &W, int &H, int mx, int my, int mw, int mh);
   static void screen_dpi(float &h, float &v, int n=0);
+  static void screen_work_area(int &X, int &Y, int &W, int &H, int mx, int my);
+  static void screen_work_area(int &X, int &Y, int &W, int &H, int n);
+  /** 
+   Gets the bounding box of the work area of the screen that contains the mouse pointer.
+   \param[out]  X,Y,W,H the work area bounding box
+   \see void screen_work_area(int &x, int &y, int &w, int &h, int mx, int my) 
+   */
+  static void screen_work_area(int &X, int &Y, int &W, int &H) {
+    int x, y;
+    Fl::get_mouse(x, y);
+    screen_work_area(X, Y, W, H, x, y);
+  }
 
   /**   @} */
 
@@ -1170,5 +1186,5 @@ public:
 #endif // !Fl_H
 
 //
-// End of "$Id: Fl.H 8548 2011-03-30 12:07:52Z AlbrechtS $".
+// End of "$Id: Fl.H 9701 2012-10-18 12:56:31Z manolo $".
 //

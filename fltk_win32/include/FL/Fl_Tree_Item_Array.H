@@ -1,10 +1,11 @@
 //
-// "$Id: Fl_Tree_Item_Array.H 7903 2010-11-28 21:06:39Z matt $"
+// "$Id: Fl_Tree_Item_Array.H 9706 2012-11-06 20:46:14Z matt $"
 //
 
 #ifndef _FL_TREE_ITEM_ARRAY_H
 #define _FL_TREE_ITEM_ARRAY_H
 
+#include <FL/Fl.H>
 #include "Fl_Export.H"
 
 class FL_EXPORT Fl_Tree_Item;	// forward decl must *precede* first doxygen comment block
@@ -17,20 +18,15 @@ class FL_EXPORT Fl_Tree_Item;	// forward decl must *precede* first doxygen comme
 // Fl_Tree -- This file is part of the Fl_Tree widget for FLTK
 // Copyright (C) 2009-2010 by Greg Ercolano.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
+//     http://www.fltk.org/COPYING.php
 //
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+// Please report all bugs and problems on the following page:
+//
+//     http://www.fltk.org/str.php
 //
 
 ///
@@ -71,11 +67,17 @@ public:
     return(_total);
   }
   /// Swap the two items at index positions \p ax and \p bx.
+#if FLTK_ABI_VERSION >= 10301
+  // NEW -- code moved to .cxx
+  void swap(int ax, int bx);
+#else /*FLTK_ABI_VERSION*/
+  // OLD
   void swap(int ax, int bx) {
     Fl_Tree_Item *asave = _items[ax];
     _items[ax] = _items[bx];
     _items[bx] = asave;
   }
+#endif /*FLTK_ABI_VERSION*/
   void clear();
   void add(Fl_Tree_Item *val);
   void insert(int pos, Fl_Tree_Item *new_item);
@@ -86,5 +88,5 @@ public:
 #endif /*_FL_TREE_ITEM_ARRAY_H*/
 
 //
-// End of "$Id: Fl_Tree_Item_Array.H 7903 2010-11-28 21:06:39Z matt $".
+// End of "$Id: Fl_Tree_Item_Array.H 9706 2012-11-06 20:46:14Z matt $".
 //

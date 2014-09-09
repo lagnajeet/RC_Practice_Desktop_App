@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Round_Clock.H 8022 2010-12-12 23:21:03Z AlbrechtS $"
+// "$Id: Fl_Round_Clock.H 9637 2012-07-24 04:37:22Z matt $"
 //
 // Round clock header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -36,13 +27,12 @@
 /** A clock widget of type FL_ROUND_CLOCK. Has no box. */
 class FL_EXPORT Fl_Round_Clock : public Fl_Clock {
 public:
-    /** Creates the clock widget, setting his type and box. */
-    Fl_Round_Clock(int x,int y,int w,int h, const char *l = 0)
-	: Fl_Clock(x,y,w,h,l) {type(FL_ROUND_CLOCK); box(FL_NO_BOX);}
+  /** Creates the clock widget, setting his type and box. */
+  Fl_Round_Clock(int X,int Y,int W,int H, const char *L = 0);
 };
 
 #endif
 
 //
-// End of "$Id: Fl_Round_Clock.H 8022 2010-12-12 23:21:03Z AlbrechtS $".
+// End of "$Id: Fl_Round_Clock.H 9637 2012-07-24 04:37:22Z matt $".
 //

@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Image.H 8338 2011-01-30 09:24:40Z manolo $"
+// "$Id: Fl_Image.H 9709 2012-11-09 16:02:08Z manolo $"
 //
 // Image header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2011 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -32,6 +23,7 @@
 #  define Fl_Image_H
 
 #  include "Enumerations.H"
+#include <stdlib.h>
 
 class Fl_Widget;
 struct Fl_Menu_Item;
@@ -176,6 +168,7 @@ class FL_EXPORT Fl_RGB_Image : public Fl_Image {
   friend class Fl_Quartz_Graphics_Driver;
   friend class Fl_GDI_Graphics_Driver;
   friend class Fl_Xlib_Graphics_Driver;
+  static size_t max_size_;
 public:
 
   const uchar *array;
@@ -193,7 +186,21 @@ public:
 
   public:
 
-/**  The constructor creates a new image from the specified data. */
+/**
+  The constructor creates a new image from the specified data.
+  \param[in] bits   The image data array.
+  \param[in] W      The width of the image in pixels
+  \param[in] H      The height of the image in pixels
+  \param[in] D      The image depth, or 'number of channels'. Default=3<br>
+                    If D=1, each uchar in bits[] is a grayscale pixel value.<br>
+		    If D=2, each uchar pair in bits[] is a grayscale + alpha pixel value.<br>
+		    If D=3, each uchar triplet in bits[] is an R/G/B pixel value<br>
+		    If D=4, each uchar quad in bits[] is an R/G/B/A pixel value.
+  \param[in] LD     Line data size (default=0).<br>
+                    Line data is extra data that is included after each line
+		    of color image data and is normally not present. 
+  \see Fl_Image::data(), Fl_Image::w(), Fl_Image::h(), Fl_Image::d(), Fl_Image::ld()
+  */
   Fl_RGB_Image(const uchar *bits, int W, int H, int D=3, int LD=0) :
     Fl_Image(W,H,D), array(bits), alloc_array(0), id_(0), mask_(0) {data((const char **)&array, 1); ld(LD);}
   virtual ~Fl_RGB_Image();
@@ -206,10 +213,25 @@ public:
   virtual void label(Fl_Widget*w);
   virtual void label(Fl_Menu_Item*m);
   virtual void uncache();
+  /** Sets the maximum allowed image size in bytes when creating an Fl_RGB_Image object.
+   
+   The image size in bytes of an Fl_RGB_Image object is the value of the product w() * h() * d().
+   If this product exceeds size, the created object of a derived class of Fl_RGB_Image 
+   won't be loaded with the image data.
+   This does not apply to direct RGB image creation with 
+   Fl_RGB_Image::Fl_RGB_Image(const uchar *bits, int W, int H, int D, int LD).
+   The default max_size() value is essentially infinite. 
+   */
+  static void max_size(size_t size) { max_size_ = size;}
+  /** Returns the maximum allowed image size in bytes when creating an Fl_RGB_Image object.
+   
+   \sa  void Fl_RGB_Image::max_size(size_t)
+   */
+  static size_t max_size() {return max_size_;}
 };
 
 #endif // !Fl_Image_H
 
 //
-// End of "$Id: Fl_Image.H 8338 2011-01-30 09:24:40Z manolo $".
+// End of "$Id: Fl_Image.H 9709 2012-11-09 16:02:08Z manolo $".
 //

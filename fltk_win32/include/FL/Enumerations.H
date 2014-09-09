@@ -1,24 +1,15 @@
 //
-// "$Id: Enumerations.H 8623 2011-04-24 17:09:41Z AlbrechtS $"
+// "$Id: Enumerations.H 9742 2012-12-09 18:45:57Z manolo $"
 //
 // Enumerations for the Fast Light Tool Kit (FLTK).
 //
-// Copyright 1998-2011 by Bill Spitzak and others.
+// Copyright 1998-2012 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -31,6 +22,12 @@
 
 #ifndef Fl_Enumerations_H
 #define Fl_Enumerations_H
+
+/* Uncomment the following FLTK_ABI_VERSION line to enable ABI breaking fixes
+ * in the current patch release of FLTK. ** Use for static builds only! **
+ * For more info on this macro, see: http://fltk.org/cmp.php#FLTK_ABI_VERSION
+ */
+//#define FLTK_ABI_VERSION 10303
 
 #  include "Fl_Export.H"
 #  include "fl_types.h"
@@ -62,7 +59,7 @@
 
    FLTK remains binary compatible between patches.
  */
-#define FL_PATCH_VERSION	0
+#define FL_PATCH_VERSION	2
 
 /**
     The FLTK version number as a \em double.
@@ -292,7 +289,14 @@ enum Fl_Event {	// events
       If the widget returns 1, it will receive the data in the immediately 
       following FL_PASTE event.
    */
-  FL_DND_RELEASE	= 23
+  FL_DND_RELEASE	= 23,
+  /** The screen configuration (number, positions) was changed.
+   Use Fl::add_handler() to be notified of this event.
+   */
+  FL_SCREEN_CONFIGURATION_CHANGED = 24,
+  /** The fullscreen state of the window has changed
+   */
+   FL_FULLSCREEN         = 25
 };
 
 /** \name When Conditions */
@@ -333,6 +337,7 @@ enum Fl_When { // Fl_Widget::when():
 #define FL_Button	0xfee8	///< A mouse button; use Fl_Button + n for mouse button n.
 #define FL_BackSpace	0xff08	///< The backspace key.
 #define FL_Tab		0xff09	///< The tab key.
+#define FL_Iso_Key	0xff0c  ///< The additional key of ISO keyboards.
 #define FL_Enter	0xff0d	///< The enter key. 
 #define FL_Pause	0xff13	///< The pause key.
 #define FL_Scroll_Lock	0xff14	///< The scroll lock key.
@@ -365,6 +370,27 @@ enum Fl_When { // Fl_Widget::when():
 #define FL_Alt_L	0xffe9	///< The left alt key.
 #define FL_Alt_R	0xffea	///< The right alt key. 
 #define FL_Delete	0xffff	///< The delete key.
+
+// These use the Private Use Area (PUA) of the Basic Multilingual Plane
+// of Unicode. Guaranteed not to conflict with a proper Unicode character.
+
+// These primarily map to the XFree86 keysym range
+#define FL_Volume_Down  0xEF11   /* Volume control down        */
+#define FL_Volume_Mute  0xEF12   /* Mute sound from the system */
+#define FL_Volume_Up    0xEF13   /* Volume control up          */
+#define FL_Media_Play   0xEF14   /* Start playing of audio     */
+#define FL_Media_Stop   0xEF15   /* Stop playing audio         */
+#define FL_Media_Prev   0xEF16   /* Previous track             */
+#define FL_Media_Next   0xEF17   /* Next track                 */
+#define FL_Home_Page    0xEF18   /* Display user's home page   */
+#define FL_Mail         0xEF19   /* Invoke user's mail program */
+#define FL_Search       0xEF1B   /* Search                     */
+#define FL_Back         0xEF26   /* Like back on a browser     */
+#define FL_Forward      0xEF27   /* Like forward on a browser  */
+#define FL_Stop         0xEF28   /* Stop current operation     */
+#define FL_Refresh      0xEF29   /* Refresh the page           */
+#define FL_Sleep        0xEF2F   /* Put system to sleep        */
+#define FL_Favorites    0xEF30   /* Show favorite locations    */
 
 /*@}*/	// group: Mouse and Keyboard Events
 
@@ -934,5 +960,5 @@ enum Fl_Damage {
 #endif
 
 //
-// End of "$Id: Enumerations.H 8623 2011-04-24 17:09:41Z AlbrechtS $".
+// End of "$Id: Enumerations.H 9742 2012-12-09 18:45:57Z manolo $".
 //

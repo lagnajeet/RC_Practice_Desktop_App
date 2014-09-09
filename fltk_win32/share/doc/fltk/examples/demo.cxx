@@ -1,24 +1,15 @@
 //
-// "$Id: demo.cxx 8252 2011-01-11 10:36:44Z manolo $"
+// "$Id: demo.cxx 9736 2012-12-05 14:53:03Z manolo $"
 //
 // Main demo program for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -36,7 +27,7 @@
 #    define chdir _chdir
 #    define putenv _putenv
 #  endif // !__WATCOMC__
-#elif defined USING_XCODE
+#elif defined __APPLE__
 #include <ApplicationServices/ApplicationServices.h>
 #include <unistd.h> // for chdir()
 #include <stdio.h>
@@ -281,7 +272,7 @@ void dobut(Fl_Widget *, long arg)
     delete[] command;
     delete[] copy_of_icommand;
     
-#elif defined USING_XCODE
+#elif defined __APPLE__
     char *cmd = strdup(menus[men].icommand[bn]);
     char *arg = strchr(cmd, ' ');
     
@@ -292,22 +283,32 @@ void dobut(Fl_Widget *, long arg)
     CFBundleRef app = CFBundleGetMainBundle();
     CFURLRef url = CFBundleCopyBundleURL(app);    
     CFStringRef cc_app_path = CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);
+    CFRelease(url);
     CFStringGetCString(cc_app_path, app_path, 2048, kCFStringEncodingUTF8);
+    CFRelease(cc_app_path);
     if (*app_path) {
       char *n = strrchr(app_path, '/');
       if (n) {
+#if defined USING_XCODE
         *n = 0;
+#endif
         chdir(app_path);
       }
     }
     
     if (arg) {
+      const char *fluidpath;
       *arg = 0;
+#if defined USING_XCODE
+      fl_filename_absolute(path, 2048, "../../../../test/");
+      fluidpath = "Fluid.app";
+#else
+      strcpy(path, app_path); strcat(path, "/");
+      fluidpath = "../fluid/fluid.app";
+#endif
       if (strcmp(cmd, "../fluid/fluid")==0) {
-        fl_filename_absolute(path, 2048, "../../../../test/");
-	sprintf(command, "open Fluid.app --args %s%s", path, arg+1);
+	sprintf(command, "open %s --args %s%s", fluidpath, path, arg+1);
       } else {
-        fl_filename_absolute(path, 2048, "../../../../test/");
 	sprintf(command, "open %s.app --args %s%s", cmd, path, arg+1);
       }
     } else {
@@ -428,6 +429,6 @@ int main(int argc, char **argv) {
 }
 
 //
-// End of "$Id: demo.cxx 8252 2011-01-11 10:36:44Z manolo $".
+// End of "$Id: demo.cxx 9736 2012-12-05 14:53:03Z manolo $".
 //
 

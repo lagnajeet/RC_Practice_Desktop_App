@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Tooltip.H 8405 2011-02-08 20:59:46Z manolo $"
+// "$Id: Fl_Tooltip.H 9706 2012-11-06 20:46:14Z matt $"
 //
 // Tooltip header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2011 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -37,6 +28,10 @@
 /**
   The Fl_Tooltip class provides tooltip support for
   all FLTK widgets. It contains only static methods.
+
+  \image html tooltip-options.png "Fl_Tooltip Options"
+  \image latex src/tooltip-options.png "Fl_Tooltip Options" width=6cm
+
 */
 class FL_EXPORT Fl_Tooltip {
 public:
@@ -83,6 +78,25 @@ public:
   static Fl_Color textcolor() { return textcolor_; }
   /** Sets the color of the text in the tooltip. The default is  black. */
   static void textcolor(Fl_Color c) { textcolor_ = c; }
+#if FLTK_ABI_VERSION >= 10301
+  /** Gets the amount of extra space left/right of the tooltip's text. Default is 3. */
+  static int margin_width() { return margin_width_; }
+  /** Sets the amount of extra space left/right of the tooltip's text. Default is 3. */
+  static void margin_width(int v) { margin_width_ = v; }
+  /** Gets the amount of extra space above and below the tooltip's text. Default is 3. */
+  static int margin_height() { return margin_height_; }
+  /** Sets the amount of extra space above and below the tooltip's text. Default is 3. */
+  static void margin_height(int v) { margin_height_ = v; }
+  /** Gets the maximum width for tooltip's text before it word wraps. Default is 400. */
+  static int wrap_width() { return wrap_width_; }
+  /** Sets the maximum width for tooltip's text before it word wraps. Default is 400. */
+  static void wrap_width(int v) { wrap_width_ = v; }
+#else
+  static int margin_width() { return 3; }
+  static int margin_height() { return 3; }
+  static int wrap_width() { return 400; }
+#endif
+
 #ifdef __APPLE__
   // the unique tooltip window
   static Fl_Window* current_window(void);
@@ -105,10 +119,15 @@ private:
   static Fl_Font font_;
   static Fl_Fontsize size_;
   static Fl_Widget* widget_; //!< Keeps track of the current target widget
+#if FLTK_ABI_VERSION >= 10301
+  static int margin_width_;	//!< distance around tooltip text left+right
+  static int margin_height_;	//!< distance around tooltip text top+bottom
+  static int wrap_width_;	//!< maximum width of tooltip text before it word wraps
+#endif
 };
 
 #endif
 
 //
-// End of "$Id: Fl_Tooltip.H 8405 2011-02-08 20:59:46Z manolo $".
+// End of "$Id: Fl_Tooltip.H 9706 2012-11-06 20:46:14Z matt $".
 //

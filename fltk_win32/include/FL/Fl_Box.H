@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Box.H 7903 2010-11-28 21:06:39Z matt $"
+// "$Id: Fl_Box.H 9672 2012-08-17 09:18:06Z manolo $"
 //
 // Box header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -36,7 +27,7 @@
 #endif
 
 /**
-  This widget simply draws its box, and possibly it's label.  Putting it
+  This widget simply draws its box, and possibly its label.  Putting it
   before some other widgets and making it big enough to surround them
   will let you draw a frame around them.
 */
@@ -53,11 +44,10 @@ public:
     type.
     <P>The destructor removes the box.
   */
-    Fl_Box(int X, int Y, int W, int H, const char *l=0)
-	: Fl_Widget(X,Y,W,H,l) {}
+  Fl_Box(int X, int Y, int W, int H, const char *l=0);
+  
   /**    See Fl_Box::Fl_Box(int x, int y, int w, int h, const char * = 0)   */
-    Fl_Box(Fl_Boxtype b, int X, int Y, int W, int H, const char *l)
-	: Fl_Widget(X,Y,W,H,l) {box(b);}
+  Fl_Box(Fl_Boxtype b, int X, int Y, int W, int H, const char *l);
 
   virtual int handle(int);
 };
@@ -65,5 +55,5 @@ public:
 #endif
 
 //
-// End of "$Id: Fl_Box.H 7903 2010-11-28 21:06:39Z matt $".
+// End of "$Id: Fl_Box.H 9672 2012-08-17 09:18:06Z manolo $".
 //

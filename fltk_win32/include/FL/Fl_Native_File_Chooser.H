@@ -1,25 +1,16 @@
 //
-// "$Id: Fl_Native_File_Chooser.H 8380 2011-02-06 10:07:28Z manolo $"
+// "$Id: Fl_Native_File_Chooser.H 9704 2012-10-19 11:23:51Z manolo $"
 //
 // FLTK native OS file chooser widget
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 // Copyright 2004 Greg Ercolano.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -29,57 +20,6 @@
 /** \file
    Fl_Native_File_Chooser widget. */
 
-/**
-  \class Fl_Native_File_Chooser
-
-  This class lets an FLTK application easily and consistently access 
-  the operating system's native file chooser. Some operating systems 
-  have very complex and specific file choosers that many users want 
-  access to specifically, instead of FLTK's default file chooser(s). 
-
-  In cases where there is no native file browser, FLTK's own file browser
-  is used instead.
-
-  To use this widget correctly, use the following include in your code:
-  \code
-  #include <FL/Fl_Native_File_Chooser.H>
-  \endcode
-  Do not include the other Fl_Native_File_Choser_XXX.H files in your code;
-  those are platform specific files that will be included automatically
-  depending on your build platform.
-
-  The following example shows how to pick a single file:
-  \code
-  // Create and post the local native file chooser
-  #include <FL/Fl_Native_File_Chooser.H>
-  [..]
-  Fl_Native_File_Chooser fnfc;
-  fnfc.title("Pick a file");
-  fnfc.type(Fl_Native_File_Chooser::BROWSE_FILE);
-  fnfc.filter("Text\t*.txt\n"
-              "C Files\t*.{cxx,h,c}");
-  fnfc.directory("/var/tmp");           // default directory to use
-  // Show native chooser
-  switch ( fnfc.show() ) {
-    case -1: printf("ERROR: %s\n", fnfc.errmsg());    break;  // ERROR
-    case  1: printf("CANCEL\n");                      break;  // CANCEL
-    default: printf("PICKED: %s\n", fnfc.filename()); break;  // FILE CHOSEN
-  }
-  \endcode
-
-  <B>Platform Specific Caveats</B>
-
-  - Under X windows, it's best if you call Fl_File_Icon::load_system_icons()
-    at the start of main(), to enable the nicer looking file browser widgets.
-    Use the static public attributes of class Fl_File_Chooser to localize
-    the browser.
-  - Some operating systems support certain OS specific options; see 
-    Fl_Native_File_Chooser::options() for a list.
-
-  \image html Fl_Native_File_Chooser.png "The Fl_Native_File_Chooser on different platforms."
-  \image latex Fl_Native_File_Chooser.png "The Fl_Native_File_Chooser on different platforms" width=14cm
-
-*/
 #ifndef FL_NATIVE_FILE_CHOOSER_H
 #define FL_NATIVE_FILE_CHOOSER_H
 
@@ -98,7 +38,6 @@
 
 // Use Apple's chooser
 #ifdef __APPLE__
-#include <FL/filename.H>
 #define MAXFILTERS	80
 #endif
 
@@ -106,6 +45,8 @@
 #if ! defined(__APPLE__) && !defined(WIN32)
 #include <FL/Fl_File_Chooser.H>
 #include <unistd.h>		// _POSIX_NAME_MAX
+#else
+#include <FL/filename.H>	// FL_EXPORT
 #endif
 
 
@@ -141,6 +82,12 @@
    default: printf("PICKED: %s\n", fnfc.filename()); break;  // FILE CHOSEN
  }
  \endcode
+ 
+ The Fl_Native_File_Chooser widget transmits UTF-8 encoded filenames to its user. It is
+ recommended to open files that may have non-ASCII names with the fl_fopen() or
+ fl_open() utility functions that handle these names in a cross-platform way 
+ (whereas the standard fopen()/open() functions fail on the MSWindows platform 
+ to open files with a non-ASCII name).
  
  <B>Platform Specific Caveats</B>
  
@@ -223,7 +170,7 @@ private:
   void set_single_pathname(const char *s);
   void add_pathname(const char *s);
   
-  void FreePIDL(ITEMIDLIST *pidl);
+  void FreePIDL(LPITEMIDLIST pidl);
   void ClearOFN();
   void ClearBINF();
   void Win2Unix(char *s);
@@ -272,6 +219,7 @@ private:
   void add_filter(const char *, const char *);
   void parse_filter(const char *from);
   int post();
+  int runmodal();
 #endif
 
 #if ! defined(__APPLE__) && !defined(WIN32)
@@ -301,5 +249,5 @@ private:
 #endif /*FL_NATIVE_FILE_CHOOSER_H*/
 
 //
-// End of "$Id: Fl_Native_File_Chooser.H 8380 2011-02-06 10:07:28Z manolo $".
+// End of "$Id: Fl_Native_File_Chooser.H 9704 2012-10-19 11:23:51Z manolo $".
 //

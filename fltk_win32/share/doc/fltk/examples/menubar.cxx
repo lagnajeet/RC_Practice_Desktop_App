@@ -1,24 +1,15 @@
 //
-// "$Id: menubar.cxx 7903 2010-11-28 21:06:39Z matt $"
+// "$Id: menubar.cxx 9241 2012-02-18 08:29:30Z manolo $"
 //
 // Menubar test program for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -28,7 +19,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Double_Window.H>
-#include <FL/Fl_Menu_Bar.H>
+#include <FL/Fl_Sys_Menu_Bar.H>
 #include <FL/Fl_Toggle_Button.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Choice.H>
@@ -179,6 +170,33 @@ Fl_Menu_Item pulldown[] = {
   {0}
 };
 
+#ifdef __APPLE__
+Fl_Menu_Item menu_location[] = {
+  {"Fl_Menu_Bar",	0, 0, 0, FL_MENU_VALUE},
+  {"Fl_Sys_Menu_Bar",	},
+  {0}
+};
+
+Fl_Sys_Menu_Bar* smenubar;
+
+void menu_location_cb(Fl_Widget* w, void* data) 
+{
+  Fl_Menu_Bar *menubar = (Fl_Menu_Bar*)data;
+  if (((Fl_Choice*)w)->value() == 1) { // switch to system menu bar
+    menubar->hide();
+    const Fl_Menu_Item *menu = menubar->menu();
+    smenubar = new  Fl_Sys_Menu_Bar(0,0,0,30); 
+    smenubar->menu(menu);
+    smenubar->callback(test_cb);
+    }
+  else { // switch to window menu bar
+    smenubar->clear();
+    delete smenubar;
+    menubar->show();
+    }
+}
+#endif // __APPLE__
+
 #define WIDTH 700
 
 Fl_Menu_* menus[4];
@@ -213,11 +231,16 @@ int main(int argc, char **argv) {
   Fl_Box b(200,200,200,100,"Press right button\nfor a pop-up menu");
   window.resizable(&mb);
   window.size_range(300,400,0,400);
+#ifdef __APPLE__
+  Fl_Choice ch2(500,100,150,25,"Use:"); 
+  ch2.menu(menu_location);
+  ch2.callback(menu_location_cb, &menubar);
+#endif
   window.end();
   window.show(argc, argv);
   return Fl::run();
 }
 
 //
-// End of "$Id: menubar.cxx 7903 2010-11-28 21:06:39Z matt $".
+// End of "$Id: menubar.cxx 9241 2012-02-18 08:29:30Z manolo $".
 //

@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Slider.H 7981 2010-12-08 23:53:04Z greg.ercolano $"
+// "$Id: Fl_Slider.H 9553 2012-05-28 15:39:12Z greg.ercolano $"
 //
 // Slider header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -44,7 +35,7 @@
 #define FL_HOR_NICE_SLIDER	5
 
 /**
-  The Fl_Slider widget contains a sliding knob inside a box. It if
+  The Fl_Slider widget contains a sliding knob inside a box. It is
   often used as a scrollbar.  Moving the box all the way to the
   top/left sets it to the minimum(), and to the bottom/right to the
   maximum().  The minimum() may be greater than the maximum() to
@@ -116,5 +107,5 @@ public:
 #endif
 
 //
-// End of "$Id: Fl_Slider.H 7981 2010-12-08 23:53:04Z greg.ercolano $".
+// End of "$Id: Fl_Slider.H 9553 2012-05-28 15:39:12Z greg.ercolano $".
 //

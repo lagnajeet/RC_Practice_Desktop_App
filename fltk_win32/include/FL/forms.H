@@ -1,24 +1,15 @@
 //
-// "$Id: forms.H 8623 2011-04-24 17:09:41Z AlbrechtS $"
+// "$Id: forms.H 9325 2012-04-05 05:12:30Z fabien $"
 //
 // Forms emulation header file for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 1998-2011 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -168,9 +159,9 @@ typedef int FL_COLOR;
 extern FL_EXPORT void fl_initialize(int*, char*[], const char*, FL_CMD_OPT*, int);
 inline void fl_finish() {}
 
-typedef void (*FL_IO_CALLBACK) (int, void*);
+typedef void (*FL_IO_CALLBACK) (FL_SOCKET, void*);
 inline void fl_add_io_callback(int fd, short w, FL_IO_CALLBACK cb, void* v) {
-  Fl::add_fd(fd,w,cb,v);}
+  Fl::add_fd(fd, w, cb, v);}
 inline void fl_remove_io_callback(int fd, short, FL_IO_CALLBACK) {
   Fl::remove_fd(fd);} // removes all the callbacks!
 
@@ -841,5 +832,5 @@ inline void fl_draw() {Fl::flush();}
 #endif	/* define __FORMS_H__ */
 
 //
-// End of "$Id: forms.H 8623 2011-04-24 17:09:41Z AlbrechtS $".
+// End of "$Id: forms.H 9325 2012-04-05 05:12:30Z fabien $".
 //

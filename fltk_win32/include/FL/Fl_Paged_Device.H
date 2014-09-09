@@ -1,24 +1,15 @@
 //
-// "$Id: Fl_Paged_Device.H 8593 2011-04-15 21:38:05Z manolo $"
+// "$Id: Fl_Paged_Device.H 9706 2012-11-06 20:46:14Z matt $"
 //
 // Printing support for the Fast Light Tool Kit (FLTK).
 //
 // Copyright 2010 by Bill Spitzak and others.
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+//     http://www.fltk.org/COPYING.php
 //
 // Please report all bugs and problems on the following page:
 //
@@ -44,7 +35,7 @@
  This class has no public constructor: don't instantiate it; use Fl_Printer 
  or Fl_PostScript_File_Device instead.
  */
-class Fl_Paged_Device : public Fl_Surface_Device {
+class FL_EXPORT Fl_Paged_Device : public Fl_Surface_Device {
 public:
   /**
    \brief Possible page formats.
@@ -115,10 +106,16 @@ protected:
   /** \brief vertical offset to the origin of graphics coordinates */
   int y_offset;
   /** \brief The constructor */
-  Fl_Paged_Device() : Fl_Surface_Device(NULL) {};
+  Fl_Paged_Device() : Fl_Surface_Device(NULL), x_offset(0), y_offset(0) {};
+#if FLTK_ABI_VERSION >= 10301
+public:
+  /** \brief The destructor */
+  virtual ~Fl_Paged_Device() {};
+#else
   /** \brief The destructor */
   virtual ~Fl_Paged_Device() {};
 public:
+#endif // FLTK_ABI_VERSION
   static const char *class_id;
   const char *class_name() {return class_id;};
   virtual int start_job(int pagecount, int *frompage = NULL, int *topage = NULL);
@@ -148,6 +145,6 @@ public:
 #endif // Fl_Paged_Device_H
 
 //
-// End of "$Id: Fl_Paged_Device.H 8593 2011-04-15 21:38:05Z manolo $"
+// End of "$Id: Fl_Paged_Device.H 9706 2012-11-06 20:46:14Z matt $"
 //
 

@@ -1,31 +1,20 @@
 //
-// "$Id: Fl_Table.H 8301 2011-01-22 22:40:11Z AlbrechtS $"
+// "$Id: Fl_Table.H 9731 2012-11-23 20:07:22Z greg.ercolano $"
 //
 // Fl_Table -- A table widget
 //
 // Copyright 2002 by Greg Ercolano.
 // Copyright (c) 2004 O'ksi'D
 //
-// This library is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Library General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
+// This library is free software. Distribution and use rights are outlined in
+// the file "COPYING" which should have been included with this file.  If this
+// file is missing or damaged, see the license at:
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
+//     http://www.fltk.org/COPYING.php
 //
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-// USA.
+// Please report all bugs and problems on the following page:
 //
-// Please report all bugs and problems to "erco at seriss dot com".
-//
-// TODO:
-//    o Auto scroll during dragged selection
-//    o Keyboard navigation (up/down/left/right arrow)
+//     http://www.fltk.org/str.php
 //
 
 #ifndef _FL_TABLE_H
@@ -218,6 +207,9 @@ private:
   
   int _auto_drag;
   int _selecting;
+#if FLTK_ABI_VERSION >= 10301
+  int _scrollbar_size;
+#endif
   
   // An STL-ish vector without templates
   class FL_EXPORT IntVector {
@@ -452,19 +444,19 @@ protected:
   
   void damage_zone(int r1, int c1, int r2, int c2, int r3 = 0, int c3 = 0);
   
-  void redraw_range(int toprow, int botrow, int leftcol, int rightcol) {
+  void redraw_range(int topRow, int botRow, int leftCol, int rightCol) {
     if ( _redraw_toprow == -1 ) {
       // Initialize redraw range
-      _redraw_toprow = toprow;
-      _redraw_botrow = botrow;
-      _redraw_leftcol = leftcol;
-      _redraw_rightcol = rightcol;
+      _redraw_toprow = topRow;
+      _redraw_botrow = botRow;
+      _redraw_leftcol = leftCol;
+      _redraw_rightcol = rightCol;
     } else {
       // Extend redraw range
-      if ( toprow < _redraw_toprow ) _redraw_toprow = toprow;
-      if ( botrow > _redraw_botrow ) _redraw_botrow = botrow;
-      if ( leftcol < _redraw_leftcol ) _redraw_leftcol = leftcol;
-      if ( rightcol > _redraw_rightcol ) _redraw_rightcol = rightcol;
+      if ( topRow < _redraw_toprow ) _redraw_toprow = topRow;
+      if ( botRow > _redraw_botrow ) _redraw_botrow = botRow;
+      if ( leftCol < _redraw_leftcol ) _redraw_leftcol = leftCol;
+      if ( rightCol > _redraw_rightcol ) _redraw_rightcol = rightCol;
     }
     
     // Indicate partial redraw needed of some cells
@@ -486,11 +478,11 @@ public:
   ~Fl_Table();
   
   /**
-   Clears the table to zero rows, zero columns.
-   Same as rows(0); cols(0);
+   Clears the table to zero rows (rows(0)), zero columns (cols(0)), and clears
+   any widgets (table->clear()) that were added with begin()/end() or add()/insert()/etc.
    \see rows(int), cols(int)
    */
-  virtual void clear() { rows(0); cols(0); }
+  virtual void clear() { rows(0); cols(0); table->clear(); }
   
   // \todo: add topline(), middleline(), bottomline()
   
@@ -855,20 +847,25 @@ public:
     table->init_sizes();
     table->redraw();
   }
-  void add(Fl_Widget& w) {
-    table->add(w);
+  void add(Fl_Widget& wgt) {
+    table->add(wgt);
+    if ( table->children() > 2 ) {
+      table->show();
+    } else {
+      table->hide();
+    } 
   }
-  void add(Fl_Widget* w) {
-    table->add(w);
+  void add(Fl_Widget* wgt) {
+    add(*wgt);
   }
-  void insert(Fl_Widget& w, int n) {
-    table->insert(w,n);
+  void insert(Fl_Widget& wgt, int n) {
+    table->insert(wgt,n);
   }
-  void insert(Fl_Widget& w, Fl_Widget* w2) {
-    table->insert(w,w2);
+  void insert(Fl_Widget& wgt, Fl_Widget* w2) {
+    table->insert(wgt,w2);
   }
-  void remove(Fl_Widget& w) {
-    table->remove(w);
+  void remove(Fl_Widget& wgt) {
+    table->remove(wgt);
   }
   void begin() {
     table->begin();
@@ -918,11 +915,11 @@ public:
   int children() const {
     return(table->children()-2);    // -2: skip Fl_Scroll's h/v scrollbar widgets
   }
-  int find(const Fl_Widget *w) const {
-    return(table->find(w));
+  int find(const Fl_Widget *wgt) const {
+    return(table->find(wgt));
   }
-  int find(const Fl_Widget &w) const {
-    return(table->find(w));
+  int find(const Fl_Widget &wgt) const {
+    return(table->find(wgt));
   } 
   // CALLBACKS
   
@@ -1072,10 +1069,48 @@ public:
    */
   void callback(Fl_Widget*, void*);
 #endif
+
+#if FLTK_ABI_VERSION >= 10301
+  // NEW
+  /**
+    Gets the current size of the scrollbars' troughs, in pixels.
+
+    If this value is zero (default), this widget will use the 
+    Fl::scrollbar_size() value as the scrollbar's width.
+  
+    \returns Scrollbar size in pixels, or 0 if the global Fl::scrollsize() is being used.
+    \see Fl::scrollbar_size(int)
+  */
+  int scrollbar_size() const {
+      return(_scrollbar_size);
+  }
+  /**
+    Sets the pixel size of the scrollbars' troughs to \p newSize, in pixels.
+
+    Normally you should not need this method, and should use
+    Fl::scrollbar_size(int) instead to manage the size of ALL your
+    widgets' scrollbars. This ensures your application has a consistent
+    UI, is the default behavior, and is normally what you want.
+
+    Only use THIS method if you really need to override the global
+    scrollbar size. The need for this should be rare.
+
+    Setting \p newSize to the special value of 0 causes the widget to
+    track the global Fl::scrollbar_size(), which is the default.
+    
+    \param[in] newSize Sets the scrollbar size in pixels.\n
+                    If 0 (default), scrollbar size tracks the global Fl::scrollbar_size()
+    \see Fl::scrollbar_size()
+  */
+  void scrollbar_size(int newSize) {
+      if ( newSize != _scrollbar_size ) redraw();
+      _scrollbar_size = newSize;
+  }   
+#endif
 };
 
 #endif /*_FL_TABLE_H*/
 
 //
-// End of "$Id: Fl_Table.H 8301 2011-01-22 22:40:11Z AlbrechtS $".
+// End of "$Id: Fl_Table.H 9731 2012-11-23 20:07:22Z greg.ercolano $".
 //
