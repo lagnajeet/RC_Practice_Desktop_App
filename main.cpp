@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#ifdef __APPLE__
+#include <unistd.h>
+#endif // __APPLE__
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
 #include <FL/Fl.H>
@@ -40,6 +43,8 @@ int cur_ans;
 int usr_ans;
 int rs;
 int enable_timer;
+char *current_path;
+
 rapidxml::xml_node<> *questions,*node;
 Fl_Button *But_A,*But_B,*But_C,*But_D,*But_E,*nxt_question;
 void *obj_progress;
@@ -378,17 +383,34 @@ void populate_psg(int pid_no)
     int w,h;
 
     gen_random(cur_img_file_name,10);
+    char *file_path=NULL;
+    file_path = (char*)malloc((strlen(current_path)+16)*sizeof(char));
+    strcpy(file_path,current_path);
+    strcat(file_path,"line_no.gif");
+    #ifdef __APPLE__
+    pixels = stbi_load(file_path, &w, &h, 0, 3);
+    #else
     pixels = stbi_load("line_no.gif", &w, &h, 0, 3);
+    #endif
     if (pixels == 0)
     {
-        fprintf(stderr, "Couldn't open input file '%s'\n", "lines.png");
+        fprintf(stderr, "Couldn't open input file '%s'\n", "line_no.gif");
         exit(1);
     }
-    //printf("%d",buf->length());
+    strcpy(file_path,current_path);
+    strcat(file_path,cur_img_file_name);
+    #ifdef __APPLE__
+    stbi_write_png(file_path, w, (int)(buf->length()/1.6), 3, pixels, w*3);
+    #else
     stbi_write_png(cur_img_file_name, w, (int)(buf->length()/1.6), 3, pixels, w*3);
+    #endif
 
     buf->text("<body><table width='378' cellspacing=0 cellpadding=0 border=0><tr><td width='100' valign='top'><img src='");
+    #ifdef __APPLE__
+    buf->append(file_path);
+    #else
     buf->append(cur_img_file_name);
+    #endif
     buf->append("'></td><td><font face='courier' size=5>");
     buf->append(get_attr_value(p_data,"txt"));
     buf->append("</font></p></td></tr></table><table>");
@@ -408,7 +430,11 @@ void populate_psg(int pid_no)
     count_sec=0;
     count_min=0;
     enable_timer=1;
+    #ifdef __APPLE__
+    unlink(file_path);
+    #else
     unlink(cur_img_file_name);
+    #endif
 }
 int total_psg()
 {
@@ -578,11 +604,33 @@ int main (int argc, char ** argv)
     cur_progress p(5, 550,423, 30,0);
     obj_progress = (cur_progress*)window->child(15);
 
+    int i=strlen(argv[0]);
+    for(;i>0;i--)
+    {
+        if(argv[0][i]=='/')
+        {
+            argv[0][i+1]='\0';
+            break;
+        }
+    }
+    i=i+2;
+    current_path=(char*)malloc(i*sizeof(char));
+    strcpy(current_path,argv[0]);
+    #ifdef __APPLE__
+    char *file_path=NULL;
+    file_path = (char*)malloc((i+9)*sizeof(char));
+    strcpy(file_path,current_path);
+    strcat(file_path,"data.xml");
+    rapidxml::file<> f(file_path);
+    #else
     rapidxml::file<> f("data.xml");
+    #endif
+    //printf("Ok till this point");
     doc.parse<0>(f.data());
     node = doc.first_node("passages");
     totalp=total_psg();
     //printf("%d",totalp);
+
     srand (time(NULL));
     populate_psg((int)(rand() % totalp));
 
