@@ -21,6 +21,6 @@ This is a desktop application for practicing reading comprehensions. Unlike its 
 <span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; '>passages</span><span style='color:#7f0055; '>></span>
 </pre>
 
-The executables can be downloaded from <a href="https://github.com/lagnajeet/RC_Practice_Desktop_App/blob/master/RC_Practice_Utility_32bit_Windows_Linux.zip?raw=true">RC_Practice_Utility_32bit_Windows_Linux</a>. It contains an example <a href="https://github.com/lagnajeet/RC_Practice_Desktop_App/blob/master/data.xml">data.xml</a> file and the program compiled for both Windows and Linux. It can also be compiled for Mac.
+The Windows and Linux executables can be downloaded from <a href="https://github.com/lagnajeet/RC_Practice_Desktop_App/blob/master/RC_Practice_Utility_32bit_Windows_Linux.zip?raw=true">RC_Practice_Utility_32bit_Windows_Linux</a>. The Mac executables can be downloaded from <a href="https://github.com/lagnajeet/RC_Practice_Desktop_App/blob/master/RC%20Practice_Mac_OS_X.zip?raw=true">RC Practice_Mac_OS_X</a>. It contains an example <a href="https://github.com/lagnajeet/RC_Practice_Desktop_App/blob/master/data.xml">data.xml</a> file and the program compiled for both Windows and Linux. It can also be compiled for Mac.
 <br><br>
 It uses <a href="www.fltk.org">FLTK</a> for the GUI and <a href="rapidxml.sourceforge.net">RapidXML</a> for XML parsing.
