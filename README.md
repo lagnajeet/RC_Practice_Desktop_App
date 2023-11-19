@@ -1,5 +1,8 @@
-RC_Practice_Desktop_App
+RC Practice Desktop App
 =======================
+
+![image](https://github.com/lagnajeet/RC_Practice_Desktop_App/assets/8535629/8743fba1-450b-4a05-8f2c-af2a4c11213d)
+
 
 This is a desktop application for practicing reading comprehensions. Unlike its <a href='https://github.com/lagnajeet/RC_Practice_Utility'>predecessor</a> which was just an HTML file with the logic implemented in JavaScript this is a true desktop application. It accepts data files as XML documents. The data format of the XML document is as shown below.
 
